@@ -93,6 +93,32 @@ const unsigned char ttable[6][4] = {
   // R_CCW_BEGIN_M
   {R_START_M,            R_CCW_BEGIN_M,  R_START_M,    R_START | DIR_CCW},
 };
+#elif defined(TRISTATE)
+// Encoder with three states: 00, 10, 11
+// CW rotation down, CCW rotation up
+// 00 CCW_FINAL
+// 10 CCW_BEGIN
+// 11 R_START <-- Dent
+// 00 CW_BEGIN
+// 10 CW_FINAL
+#define R_CW_FINAL 0x1
+#define R_CW_BEGIN 0x2
+#define R_CCW_BEGIN 0x3
+#define R_CCW_FINAL 0x4
+
+const unsigned char ttable[5][4] = {
+  // R_START
+  {  R_CW_BEGIN, R_START, R_CCW_BEGIN, R_START },
+  // R_CW_FINAL
+  {  R_CW_BEGIN, R_START, R_CW_FINAL, R_START | DIR_CW},
+  // R_CW_BEGIN
+  {  R_CW_BEGIN, R_START, R_CW_FINAL, R_START},
+  // R_CCW_BEGIN
+  {  R_CCW_FINAL, R_START, R_CCW_BEGIN, R_START},
+  // R_CCW_FINAL
+  {  R_CCW_FINAL, R_START, R_CCW_BEGIN, R_START | DIR_CCW},
+};
+
 #else
 // Use the full-step state table (emits a code at 00 only)
 #define R_CW_FINAL 0x1

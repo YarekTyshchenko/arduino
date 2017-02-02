@@ -10,6 +10,9 @@
 // Enable this to emit codes twice per step.
 //#define HALF_STEP
 
+// Enable this if your encoder has only 3 states.
+//#define TRISTATE
+
 // Enable weak pullups
 #define ENABLE_PULLUPS
 
